@@ -61,8 +61,8 @@ public class FamilyService {
 		familyRepository.deleteById(id);
 	}
 	
-	public Family addNewChild(final long id, final Child child) {
-		Family familyToUpdate = familyRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+	public Family addChildToFamily(final Long familyId, final Child child) {
+		Family familyToUpdate = familyRepository.findById(familyId).orElseThrow(EntityNotFoundException::new);
 		familyToUpdate.addChild(child);
 		
 		return familyToUpdate;

@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.formation.ajc.family.model.Child;
 import org.formation.ajc.family.model.Family;
-import org.formation.ajc.family.model.Person.Gender;
 import org.formation.ajc.family.service.FamilyService;
 import org.formation.ajc.family.web.dto.FamilyDetailDto;
 import org.formation.ajc.family.web.dto.FamilyDto;
@@ -94,7 +94,20 @@ public class FamilyController {
 
 		familyService.deleteFamily(familyId);
 	}
-	
+
+	@PostMapping("/{id}/children")
+	public ResponseEntity<FamilyDetailDto> addChildToFamily(@PathVariable(value = "id") Long familyId,
+			@Valid @RequestBody Child child) {
+
+		LOGGER.info("Add new child to family : Id={}", familyId);
+
+		Family family = familyService.addChildToFamily(familyId, child);
+
+		LOGGER.info("Child added : Id={}", child.getId());
+
+		return ResponseEntity.ok(convertFamilyToDto(family));
+	}
+
 	private FamilyDetailDto convertFamilyToDto(final Family family) {
 		FamilyDetailDto dto = new FamilyDetailDto();
 		dto.setId(family.getId());
@@ -102,7 +115,7 @@ public class FamilyController {
 		dto.setMother(family.getMother());
 		dto.setChildren(family.getChildren());
 		dto.setAddress(family.getAddress());
-		
+
 		return dto;
 	}
 }
