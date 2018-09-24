@@ -6,6 +6,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.formation.ajc.family.model.Family;
 import org.formation.ajc.family.repository.FamilyRepository;
+import org.formation.ajc.family.web.dto.FamilyDetailDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,5 +30,29 @@ public class FamilyService {
 
 	public List<Family> findAllFamily() {
 		return familyRepository.findAll();
+	}
+	
+	public Family updateFamily(final FamilyDetailDto familyDetailDto) {
+		Family familyToUpdate = familyRepository.findById(familyDetailDto.getId()).orElseThrow(EntityNotFoundException::new);
+		familyToUpdate.getParents().clear();
+		familyToUpdate.addParent(familyDetailDto.getFather());
+		familyToUpdate.addParent(familyDetailDto.getMother());
+		familyToUpdate.setAddress(familyDetailDto.getAddress());
+		
+		return familyToUpdate;
+	}
+	
+	public Family addNewFamily(final FamilyDetailDto familyDetailDto) {
+		Family newFamily = new Family();
+		newFamily.addParent(familyDetailDto.getFather());
+		newFamily.addParent(familyDetailDto.getMother());
+		newFamily.setAddress(familyDetailDto.getAddress());
+		newFamily.setChildren(familyDetailDto.getChildren());
+		
+		return familyRepository.save(newFamily);
+	}
+	
+	public void deleteFamily(final long id) {
+		familyRepository.deleteById(id);
 	}
 }

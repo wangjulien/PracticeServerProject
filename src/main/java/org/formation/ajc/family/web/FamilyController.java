@@ -3,6 +3,8 @@ package org.formation.ajc.family.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.formation.ajc.family.model.Family;
 import org.formation.ajc.family.model.Person.Gender;
 import org.formation.ajc.family.service.FamilyService;
@@ -12,8 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +37,7 @@ public class FamilyController {
 		List<Family> familyList = familyService.findAllFamily();
 
 		LOGGER.info("Nomber of families found : {}", familyList.size());
-		
+
 		// Translate Family Entity to Family Dto object for front View's sake
 		List<FamilyDto> familyDtoList = new ArrayList<>();
 		for (Family family : familyList) {
@@ -43,7 +49,7 @@ public class FamilyController {
 					.map(p -> p.getFirstName() + " " + p.getLastName()).findFirst().orElse(""));
 			dto.setChildrenNumber(family.getChildren().size());
 			dto.setAddress(family.getAddress().toString());
-			
+
 			familyDtoList.add(dto);
 		}
 
@@ -56,14 +62,50 @@ public class FamilyController {
 		Family family = familyService.findByFamilyId(id);
 
 		LOGGER.info("Family found : {}", family.getId());
-		
+
+		return ResponseEntity.ok(convertFamilyToDto(family));
+	}
+
+	@PostMapping()
+	public ResponseEntity<FamilyDetailDto> addFamily(@Valid @RequestBody final FamilyDetailDto familyDetailDto) {
+		LOGGER.info("New Family to create : Id={}", familyDetailDto.getId());
+
+		Family family = familyService.addNewFamily(familyDetailDto);
+
+		LOGGER.info("Family added : Id={}", family.getId());
+
+		return ResponseEntity.ok(convertFamilyToDto(family));
+
+	}
+
+	@PutMapping()
+	public ResponseEntity<FamilyDetailDto> updateFamily(@Valid @RequestBody FamilyDetailDto familyDetailDto) {
+
+		LOGGER.info("Family to update : Id={}", familyDetailDto.getId());
+
+		Family family = familyService.updateFamily(familyDetailDto);
+
+		LOGGER.info("Family updated : Id={}", family.getId());
+
+		return ResponseEntity.ok(convertFamilyToDto(family));
+	}
+
+	@DeleteMapping("/{id}")
+	public void deleteFamily(@PathVariable(value = "id") Long familyId) {
+		LOGGER.info("Family to delete : Id=" + familyId);
+
+		familyService.deleteFamily(familyId);
+	}
+	
+	private FamilyDetailDto convertFamilyToDto(final Family family) {
 		FamilyDetailDto dto = new FamilyDetailDto();
 		dto.setId(family.getId());
 		dto.setFather(family.getParents().stream().filter(p -> Gender.MALE == p.getGender()).findFirst().orElse(null));
-		dto.setMother(family.getParents().stream().filter(p -> Gender.FEMALE == p.getGender()).findFirst().orElse(null));
+		dto.setMother(
+				family.getParents().stream().filter(p -> Gender.FEMALE == p.getGender()).findFirst().orElse(null));
 		dto.setChildren(family.getChildren());
 		dto.setAddress(family.getAddress());
-
-		return ResponseEntity.ok(dto);
+		
+		return dto;
 	}
 }
