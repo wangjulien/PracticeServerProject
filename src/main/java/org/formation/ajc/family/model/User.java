@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(value = { "password" }, allowSetters = true)
@@ -32,6 +33,8 @@ public class User extends Person {
 
 	@Column(unique = true)
 	private String login;
+	
+	@JsonIgnore
 	private String password;
 	
 	@ElementCollection(targetClass=Role.class)

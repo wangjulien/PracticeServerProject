@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class Person {
 
-	public static enum Sex {
+	public static enum Gender {
 		MALE, FEMALE;
 	}
 
@@ -15,7 +15,7 @@ public abstract class Person {
 	private String lastName;
 	
 	@Enumerated(EnumType.STRING)
-	private Sex sex;
+	private Gender gender;
 	private int age;
 
 	public Person() {
@@ -38,12 +38,12 @@ public abstract class Person {
 		this.lastName = lastName;
 	}
 
-	public Sex getSex() {
-		return sex;
+	public Gender getGender() {
+		return gender;
 	}
 
-	public void setSex(Sex sex) {
-		this.sex = sex;
+	public void setGender(Gender sex) {
+		this.gender = sex;
 	}
 
 	public int getAge() {

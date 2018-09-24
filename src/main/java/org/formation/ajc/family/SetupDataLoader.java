@@ -5,7 +5,7 @@ import org.formation.ajc.family.model.Child;
 import org.formation.ajc.family.model.Child.Section;
 import org.formation.ajc.family.model.Family;
 import org.formation.ajc.family.model.Parent;
-import org.formation.ajc.family.model.Person.Sex;
+import org.formation.ajc.family.model.Person.Gender;
 import org.formation.ajc.family.repository.FamilyRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -50,13 +50,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 			family.setAddress(address);
 
 			Parent father = new Parent();
-			father.setSex(Sex.MALE);
+			father.setGender(Gender.MALE);
 			father.setFirstName("SomeFather - 0" + i);
 			father.setLastName("SURNAME - A0" + i);
 			father.setAge(30 + i);
 
 			Parent mother = new Parent();
-			mother.setSex(Sex.FEMALE);
+			mother.setGender(Gender.FEMALE);
 			mother.setFirstName("SomeMother - 0" + i);
 			mother.setLastName("SURNAME - B0" + i);
 			mother.setAge(25 + i);
@@ -66,7 +66,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 			for (int j = 0; j < 3; j++) {
 				Child child = new Child();
-				child.setSex((int) (Math.random() + 0.5) == 0 ? Sex.FEMALE : Sex.MALE);
+				child.setGender((int) (Math.random() + 0.5) == 0 ? Gender.FEMALE : Gender.MALE);
 				child.setFirstName("SomeChild - 0" + i);
 				child.setLastName("SURNAME - B0" + i);
 				child.setAge(j + 1);
