@@ -43,10 +43,8 @@ public class FamilyController {
 		for (Family family : familyList) {
 			FamilyDto dto = new FamilyDto();
 			dto.setId(family.getId());
-			dto.setFatherName(family.getParents().stream().filter(p -> Gender.MALE == p.getGender())
-					.map(p -> p.getFirstName() + " " + p.getLastName()).findFirst().orElse(""));
-			dto.setMotherName(family.getParents().stream().filter(p -> Gender.FEMALE == p.getGender())
-					.map(p -> p.getFirstName() + " " + p.getLastName()).findFirst().orElse(""));
+			dto.setFatherName(family.getFather().getFirstName() + " " + family.getFather().getLastName());
+			dto.setMotherName(family.getMother().getFirstName() + " " + family.getMother().getLastName());
 			dto.setChildrenNumber(family.getChildren().size());
 			dto.setAddress(family.getAddress().toString());
 
@@ -100,9 +98,8 @@ public class FamilyController {
 	private FamilyDetailDto convertFamilyToDto(final Family family) {
 		FamilyDetailDto dto = new FamilyDetailDto();
 		dto.setId(family.getId());
-		dto.setFather(family.getParents().stream().filter(p -> Gender.MALE == p.getGender()).findFirst().orElse(null));
-		dto.setMother(
-				family.getParents().stream().filter(p -> Gender.FEMALE == p.getGender()).findFirst().orElse(null));
+		dto.setFather(family.getFather());
+		dto.setMother(family.getMother());
 		dto.setChildren(family.getChildren());
 		dto.setAddress(family.getAddress());
 		

@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.formation.ajc.family.model.Person.Gender;
+
 @Entity
 public class Family {
 
@@ -68,5 +70,12 @@ public class Family {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
+	
+	public Parent getFather() {
+		return parents.stream().filter(p -> Gender.MALE == p.getGender()).findFirst().orElse(null);
+	}
+	
+	public Parent getMother() {
+		return parents.stream().filter(p -> Gender.FEMALE == p.getGender()).findFirst().orElse(null);
+	}
 }
