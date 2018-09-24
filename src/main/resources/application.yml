@@ -5,10 +5,20 @@ server:
 
 spring:
   datasource: 
-    url: jdbc:h2:mem:family-space
-    username: sa
-    password:
+#    url: jdbc:h2:mem:family-space
+#    username: sa
+#    password:
+    url: jdbc:postgresql://192.168.4.7:5432/family-space
+    username: tomcat
+    password: tomcat
   jpa:
     show-sql: false
     hibernate:
       ddl-auto: create-drop
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        temp:
+          use_jdbc_metadata_defaults: false

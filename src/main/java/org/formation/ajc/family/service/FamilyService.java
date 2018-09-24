@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.formation.ajc.family.model.Child;
 import org.formation.ajc.family.model.Family;
 import org.formation.ajc.family.model.Parent;
 import org.formation.ajc.family.model.Person.Gender;
@@ -58,6 +59,13 @@ public class FamilyService {
 	
 	public void deleteFamily(final long id) {
 		familyRepository.deleteById(id);
+	}
+	
+	public Family addNewChild(final long id, final Child child) {
+		Family familyToUpdate = familyRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		familyToUpdate.addChild(child);
+		
+		return familyToUpdate;
 	}
 	
 	private void updateParent(final Parent parentFrom, final Parent parentTo) {

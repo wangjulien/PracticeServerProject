@@ -54,6 +54,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 			father.setFirstName("SomeFather - 0" + i);
 			father.setLastName("SURNAME - A0" + i);
 			father.setAge(30 + i);
+			father.setLogin(father.getFirstName());
 
 			Parent mother = new Parent();
 			mother.setGender(Gender.FEMALE);

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = { "password" }, allowSetters = true)
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User extends Person {
+public abstract class User extends Person {
 
 	public static enum Role {
 		ROLE_ADMIN, ROLE_USER;
@@ -39,7 +40,7 @@ public class User extends Person {
 	
 	@ElementCollection(targetClass=Role.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="user_roles")
+    @CollectionTable(name="user_roles", joinColumns=@JoinColumn(name = "app_user_id", referencedColumnName = "id"))
 	private Set<Role> roles = new HashSet<>();
 
 	public User() {

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class Parent extends User {
 
-	private int tel;
+	private String tel;
 	private String email;
 	
 	@ManyToOne
@@ -19,11 +19,11 @@ public class Parent extends User {
 		super();
 	}
 
-	public int getTel() {
+	public String getTel() {
 		return tel;
 	}
 
-	public void setTel(int tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 
