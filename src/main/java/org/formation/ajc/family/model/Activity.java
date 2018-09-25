@@ -29,8 +29,8 @@ public class Activity {
 	private Section sectionAllowed;
 	private int maxNumChildAllowed;
 	
-	@ManyToMany
-	private Set<Child> childrenInscripted = new HashSet<>();
+	@ManyToMany(mappedBy = "activites")
+	private Set<Child> childrenInscribed = new HashSet<>();
 
 	public Activity() {
 		super();
@@ -68,15 +68,15 @@ public class Activity {
 		this.maxNumChildAllowed = maxNumChildAllowed;
 	}
 
-	public Set<Child> getChildrenInscripted() {
-		return childrenInscripted;
+	public Set<Child> getChildrenInscribed() {
+		return childrenInscribed;
 	}
 
-	public void setChildrenInscripted(Set<Child> childrenInscripted) {
-		this.childrenInscripted = childrenInscripted;
+	public void setChildrenInscribed(Set<Child> childrenInscribed) {
+		this.childrenInscribed = childrenInscribed;
 	}
 	
 	public void addChild(Child child) {
-		this.childrenInscripted.add(child);
+		this.childrenInscribed.add(child);
 	}
 }

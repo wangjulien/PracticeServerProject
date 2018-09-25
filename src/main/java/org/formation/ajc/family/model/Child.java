@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Child extends Person {
 
 	public static enum Section {
-		GRAND, MOYEN, PETIT;
+		GRAND, MEDIUM, SMALL;
 	}
 
 	@Id
@@ -37,7 +37,6 @@ public class Child extends Person {
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "children_activites", joinColumns = @JoinColumn(name = "child_id"), inverseJoinColumns = @JoinColumn(name = "activity_id"))
-	
 	private Set<Activity> activites = new HashSet<>();
 
 	public Child() {
