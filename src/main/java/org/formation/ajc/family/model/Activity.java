@@ -29,7 +29,7 @@ public class Activity {
 	private Section sectionAllowed;
 	private int maxNumChildAllowed;
 	
-	@ManyToMany(mappedBy = "activites")
+	@ManyToMany(mappedBy = "activities")
 	private Set<Child> childrenInscribed = new HashSet<>();
 
 	public Activity() {

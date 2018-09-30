@@ -71,8 +71,8 @@ public class Child extends Person {
 		return activities;
 	}
 
-	public void setActivities(Set<Activity> activites) {
-		this.activities = activites;
+	public void setActivities(Set<Activity> activities) {
+		this.activities = activities;
 	}
 
 	public void addActivity(Activity activity) {
