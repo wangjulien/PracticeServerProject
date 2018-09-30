@@ -72,10 +72,10 @@ public class Family {
 	}
 	
 	public Parent getFather() {
-		return parents.stream().filter(p -> Gender.MALE == p.getGenderEnum()).findFirst().orElse(null);
+		return parents.stream().filter(p -> Gender.MALE == p.getGender()).findFirst().orElse(null);
 	}
 	
 	public Parent getMother() {
-		return parents.stream().filter(p -> Gender.FEMALE == p.getGenderEnum()).findFirst().orElse(null);
+		return parents.stream().filter(p -> Gender.FEMALE == p.getGender()).findFirst().orElse(null);
 	}
 }

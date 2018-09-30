@@ -8,17 +8,7 @@ import javax.persistence.MappedSuperclass;
 public abstract class Person {
 
 	public static enum Gender {
-		MALE("Masculin"), FEMALE("Féminin");
-
-		private String label;
-
-		private Gender(String label) {
-			this.label = label;
-		}
-
-		public String getLabel() {
-			return label;
-		}
+		MALE, FEMALE;
 	}
 
 	private String firstName;
@@ -48,11 +38,7 @@ public abstract class Person {
 		this.lastName = lastName;
 	}
 
-	public String getGender() {
-		return gender.getLabel();
-	}
-
-	public Gender getGenderEnum() {
+	public Gender getGender() {
 		return gender;
 	}
 

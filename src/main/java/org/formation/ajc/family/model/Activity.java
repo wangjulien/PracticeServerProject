@@ -15,7 +15,7 @@ import org.formation.ajc.family.model.Child.Section;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(value = { "childrenInscripted" })
+@JsonIgnoreProperties(value = { "childrenInscribed" })
 @Entity
 public class Activity {
 

@@ -22,17 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Child extends Person {
 
 	public static enum Section {
-		GRAND("Grande"), MEDIUM("Moyenne"), SMALL("Petite");
-
-		private String label;
-
-		private Section(String label) {
-			this.label = label;
-		}
-
-		public String getLabel() {
-			return label;
-		}
+		GRAND, MEDIUM, SMALL;
 	}
 
 	@Id
@@ -47,7 +37,7 @@ public class Child extends Person {
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "children_activites", joinColumns = @JoinColumn(name = "child_id"), inverseJoinColumns = @JoinColumn(name = "activity_id"))
-	private Set<Activity> activites = new HashSet<>();
+	private Set<Activity> activities = new HashSet<>();
 
 	public Child() {
 		super();
@@ -61,8 +51,8 @@ public class Child extends Person {
 		this.id = id;
 	}
 
-	public String getSection() {
-		return section.getLabel();
+	public Section getSection() {
+		return section;
 	}
 
 	public void setSection(Section section) {
@@ -77,16 +67,16 @@ public class Child extends Person {
 		this.family = family;
 	}
 
-	public Set<Activity> getActivites() {
-		return activites;
+	public Set<Activity> getActivities() {
+		return activities;
 	}
 
-	public void setActivites(Set<Activity> activites) {
-		this.activites = activites;
+	public void setActivities(Set<Activity> activites) {
+		this.activities = activites;
 	}
 
 	public void addActivity(Activity activity) {
 		activity.addChild(this);
-		this.activites.add(activity);
+		this.activities.add(activity);
 	}
 }
