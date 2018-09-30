@@ -22,7 +22,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Child extends Person {
 
 	public static enum Section {
-		GRAND, MEDIUM, SMALL;
+		GRAND("Grande"), MEDIUM("Moyenne"), SMALL("Petite");
+
+		private String label;
+
+		private Section(String label) {
+			this.label = label;
+		}
+
+		public String getLabel() {
+			return label;
+		}
 	}
 
 	@Id
@@ -51,8 +61,8 @@ public class Child extends Person {
 		this.id = id;
 	}
 
-	public Section getSection() {
-		return section;
+	public String getSection() {
+		return section.getLabel();
 	}
 
 	public void setSection(Section section) {
@@ -74,7 +84,7 @@ public class Child extends Person {
 	public void setActivites(Set<Activity> activites) {
 		this.activites = activites;
 	}
-	
+
 	public void addActivity(Activity activity) {
 		activity.addChild(this);
 		this.activites.add(activity);
