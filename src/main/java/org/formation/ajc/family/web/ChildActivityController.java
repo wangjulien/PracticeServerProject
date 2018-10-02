@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.formation.ajc.family.model.Activity;
 import org.formation.ajc.family.model.Child;
 import org.formation.ajc.family.repository.ChildRepository;
 import org.formation.ajc.family.service.ChildActivityService;
+import org.formation.ajc.family.web.dto.ActivityDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +43,9 @@ public class ChildActivityController {
 	}
 
 	@GetMapping("/{id}/activities")
-	public ResponseEntity<List<Activity>> getAllActivitiesAllowableForChild(@PathVariable("id") Long id) {
+	public ResponseEntity<List<ActivityDto>> getAllActivitiesAllowableForChild(@PathVariable("id") Long id) {
 
-		List<Activity> activities = childActivityService.getAllActivitiesAllowableForChild(id);
+		List<ActivityDto> activities = childActivityService.getAllActivitiesAllowableForChild(id);
 
 		LOGGER.info("Activities found : {}", activities.size());
 
@@ -63,12 +63,12 @@ public class ChildActivityController {
 	
 	
 	@PutMapping()
-	public ResponseEntity<Child> updateActivity(@Valid @RequestBody Child child) {
+	public ResponseEntity<Child> updateChild(@Valid @RequestBody Child child) {
 		return ResponseEntity.ok(childRepository.save(child));
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteActivity(@PathVariable(value = "id") Long id) {
+	public void deleteChild(@PathVariable(value = "id") Long id) {
 		childRepository.deleteById(id);
 	}
 }

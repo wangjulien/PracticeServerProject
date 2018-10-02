@@ -9,6 +9,7 @@ import org.formation.ajc.family.model.Activity;
 import org.formation.ajc.family.model.Child;
 import org.formation.ajc.family.repository.ActivityRepository;
 import org.formation.ajc.family.repository.ChildRepository;
+import org.formation.ajc.family.web.dto.ActivityDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +30,12 @@ public class ChildActivityService {
 		return childRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public List<Activity> getAllActivitiesAllowableForChild(final Long childId) {
+	public List<ActivityDto> getAllActivitiesAllowableForChild(final Long childId) {
 		Child child = childRepository.findById(childId).orElseThrow(EntityNotFoundException::new);
 
-		List<Activity> allowed = activityRepository.findAll().stream().filter(a -> this.checkIfAllowable(child, a))
+		List<ActivityDto> allowed = activityRepository.findAll().stream().filter(a -> this.checkIfAllowable(child, a))
+				.map(a -> new ActivityDto(a.getId(), a.getName(), a.getSectionAllowed(),
+						a.getMaxNumChildAllowed() - a.getChildrenInscribed().size()))
 				.collect(Collectors.toList());
 
 		return allowed;
